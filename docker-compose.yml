@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:  # コンテナのサービス名をwebに設定
+    container_name: php-book-app-web
+    build:
+      context: .
+      dockerfile: ./Docker/php/Dockerfile
+    # ディレクトリのマウントの設定
+    volumes:
+      - .:/var/www/html:cached
+    # 環境変数の読み込み
+    environment:
+      - APP_DEFAULT_LOCALE=ja_JP
+      - APP_DEFAULT_TIMEZONE=Asia/Tokyo
+    # docker-init-setup.shを実行し、その後apache2-foregroundを実行する
+    # ここでは、公式イメージphp:7.2-apacheの CMD ["apache2-foreground"]を上書き？している
+    command: bash -c "sh docker-init-setup.sh && apache2-foreground"
+    # ホストの5000番ポートをゲストの80番ポートにポートフォワード
+    ports:
+      - "5000:80"
