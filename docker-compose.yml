@@ -19,3 +19,17 @@ services:
     # ホストの5000番ポートをゲストの80番ポートにポートフォワード
     ports:
       - "5000:80"
+
+  db: # MySQL用のコンテナのサービス名
+    container_name: php-book-app-db # コンテナ名
+    build:
+      context: .
+      dockerfile: ./Docker/mysql/Dockerfile
+    # sqlファイルをコンテナの/docker-entrypoint-initdb.dにマウント
+    volumes:
+      - ./Docker/mysql/sqls:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret # rootユーザーのパスワード
+    ports:
+      - "13306:3306"
+
