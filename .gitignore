@@ -1,0 +1,3 @@
+# DB
+/Docker/mysql/data/*
+!/Docker/mysql/data/.gitkeep
