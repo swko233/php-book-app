@@ -13,6 +13,10 @@ services:
     environment:
       - APP_DEFAULT_LOCALE=ja_JP
       - APP_DEFAULT_TIMEZONE=Asia/Tokyo
+      - DATABASE_HOST=php-book-app-db
+      - DATABASE_USER=root
+      - DATABASE_PASS=secret
+      - DATABASE_NAME=qa_app
     # docker-init-setup.shを実行し、その後apache2-foregroundを実行する
     # ここでは、公式イメージphp:7.2-apacheの CMD ["apache2-foreground"]を上書き？している
     command: bash -c "sh docker-init-setup.sh && apache2-foreground"
