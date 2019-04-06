@@ -25,9 +25,9 @@ services:
     build:
       context: .
       dockerfile: ./Docker/mysql/Dockerfile
-    # sqlファイルをコンテナの/docker-entrypoint-initdb.dにマウント
     volumes:
-      - ./Docker/mysql/sqls:/docker-entrypoint-initdb.d
+      - ./Docker/mysql/sqls:/docker-entrypoint-initdb.d # sqlファイルをコンテナの/docker-entrypoint-initdb.dにマウント
+      - ./Docker/mysql/data:/var/lib/mysql # データの永続化設定
     environment:
       - MYSQL_ROOT_PASSWORD=secret # rootユーザーのパスワード
     ports:
