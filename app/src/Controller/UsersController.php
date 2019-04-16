@@ -15,6 +15,10 @@ class UsersController extends AppController
   public function initialize()
   {
     parent::initialize();
+
+    // 認証設定
+    // $this->loadComponent('Auth');  ← 継承元のAppControllerのinitialize()でloadComponentしており、 parent::initialize();で呼び出しているので不要($this->loadComponent('Flash');と同様)
+    $this->Auth->allow(['add']);
   }
 
   /**
