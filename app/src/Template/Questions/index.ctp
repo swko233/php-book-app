@@ -22,7 +22,10 @@
           </small>
         </p>
         <?= $this->Html->link('詳細へ', ['action' => 'view', $question->id], ['class' => 'card-link']) ?>
-        <?= $this->Form->postLink('削除する', ['action' => 'delete', $question->id], ['confirm' => '質問を削除します。よろしいですか？'], ['class' => 'card-link']) ?>
+
+        <?php if ($this->request->getSession()->read('Auth.User.id') === $question->user_id): ?>
+          <?= $this->Form->postLink('削除する', ['action' => 'delete', $question->id], ['confirm' => '質問を削除します。よろしいですか？'], ['class' => 'card-link']) ?>
+        <?php endif; ?>
       </div>
     </div>
   <?php endforeach; ?>

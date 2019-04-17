@@ -91,7 +91,14 @@ class QuestionsController extends AppController
     $this->request->allowMethod(['post']);
 
     $question = $this->Questions->get($id);
-    // @TODO 質問を削除できるのは質問投稿者のみとする
+
+    // 質問を削除できるのは質問投稿者のみとする
+    if ($question->user_id !== $this->Auth->user('id')) {
+      $this->Flash->error('他のユーザーの質問を削除することはできません');
+
+      return $this->redirect(['action' => 'index']);
+    }
+
 
     if ($this->Questions->delete($question)) {
       $this->Flash->success('質問を削除しました');
