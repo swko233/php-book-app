@@ -12,7 +12,7 @@
     <div class="card mb-2">
       <div class="card-body">
         <h5 class="card-title">
-          <i class="fas fa-user-circle"></i> <?= 'たろう' // @TODO ユーザー管理昨日実装時に修正する？ ?>
+          <i class="fas fa-user-circle"></i> <?= h($question->user->nickname) ?>
         </h5>
         <p class="card-text"><?= nl2br(h($question->body)) ?></p>
         <p class="card-subtitle mb-2 text-muted">
