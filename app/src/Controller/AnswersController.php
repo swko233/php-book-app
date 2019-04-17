@@ -78,5 +78,4 @@ class AnswersController extends AppController
     $questionId = $answer->question_id;
     return $this->redirect(['controller' => 'Questions', 'actions' => 'view', $questionId]);
   }
-
 }
