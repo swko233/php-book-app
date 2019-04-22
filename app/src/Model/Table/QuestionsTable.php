@@ -31,6 +31,10 @@ class QuestionsTable extends Table
       'foreignKey' => 'user_id',
       'joinType' => 'INNER'
     ]);
+
+    $this->belongsToMany('Categories', [
+      'foreignKey' => 'category_id'
+    ]);
   }
 
   /**
@@ -57,6 +61,7 @@ class QuestionsTable extends Table
 
   /**
    * 回答付きの質問一覧を取得する
+   * データコレクションに対するアクセスだからEntityではなくTableに定義？
    *
    * @return \Cake\ORM\Query 回答つきの質問一覧クエリ
    */
