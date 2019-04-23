@@ -78,7 +78,44 @@ class QuestionsControllerTest extends IntegrationTestCase
    */
   public function testIndex()
   {
-    $this->markTestIncomplete('Not implemented yet.');
+    /** Arrange, Act, Assert */
+
+    /** Arrange：なし */
+
+
+    /** Act 質問画面一覧にアクセスする */
+    $this->get('/questions');
+
+
+    /** Assert */
+
+    // 正常にアクセスできるかを検査する
+    $this->assertResponseOk('質問一覧画面が正常にレスポンスを返せていない');
+
+    /** @var ResultSet $actual */
+     // ビューに渡されている$questions変数を取得する（コントローラのテストとしては、ビューに渡される情報が正しければ良いのでこの変数の中身をチェックしていく）
+    $actual = $this->viewVariable('questions');
+
+    // 代表の一件をとって、内容が期待したものになっているかを検査する
+    /** @var Question $sampleQuestion */
+    $sampleQuestion = $actual->sample(1)->first();
+
+    // assertInstanceOf($expected, $actual[, $message = ''])
+    $this->assertInstanceOf(
+      Question::class,
+      $sampleQuestion,
+      'ビュー変数に質問がセットされていない'
+    );
+    $this->assertInstanceOf(
+      User::class,
+      $sampleQuestion->user,
+      '質問にユーザーが梱包されていない'
+    );
+    $this->assertInternalType(
+      'integer',
+      $sampleQuestion->answered_count,
+      '質問に回答数がついていない'
+    );
   }
 
   /**
