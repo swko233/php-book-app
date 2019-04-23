@@ -52,5 +52,24 @@ custom styles.
 
 ## コンテナ内に入る
 ```
-docker container exec -it php-book-app-web bash
+$ docker container exec -it php-book-app-web bash
+```
+
+### テスト実行
+```
+$ docker container exec -it php-book-app-web bash
+
+$ cd app
+
+# 全てのテストを実行
+$ vendor/bin/phpunit
+
+# 特定のテストを実行
+$ vendor/bin/phpunit tests/TestCase/Controller/QuestionsControllerTest.php
+```
+
+# DB操作
+```
+# DBに入る
+$ mysql -u root -h 127.0.0.1 -P 13306 -p
 ```
