@@ -294,7 +294,80 @@ class QuestionsControllerTest extends IntegrationTestCase
    */
   public function testDelete()
   {
-    $this->markTestIncomplete('Not implemented yet.');
+    $this->enableCsrfToken();
+    $this->enableRetainFlashMessages();
+    $this->login();
+
+    $targetQuestionId = 1;
+    $this->post("/questions/delete/{$targetQuestionId}");
+
+    $this->assertRedirect(
+      ['controller' => 'Questions', 'action' => 'index'],
+      '質問削除完了時にリダイレクトが正しくかかっていない'
+    );
+    $this->assertSession(
+      '質問を削除しました',
+      'Flash.flash.0.message',
+      '削除成功時のメッセージが正しくセットされていない'
+    );
+  }
+
+  /**
+   * 質問削除のテスト / 削除されるコンテンツの確認
+   *
+   * @return void
+   */
+  public function testDeleteContent()
+  {
+    $this->enableCsrfToken();
+    $this->login();
+
+    $targetQuestionId = 1;
+    $this->post("/questions/delete/{$targetQuestionId}");
+
+    $this->assertFalse(
+      $this->Questions->exists(['id' => $targetQuestionId]),
+      '削除対象の質問が削除されていない'
+    );
+  }
+  /**
+   * 質問削除のテスト / 存在しない質問を削除しようとした時の確認
+   *
+   * @return void
+   */
+  public function testDeleteNotExists()
+  {
+    $this->enableCsrfToken();
+    $this->login();
+
+    $targetQuestionId = 100;
+    $this->post("/questions/delete/{$targetQuestionId}");
+
+    $this->assertResponseCode(404, '存在しない質問を削除しようとした時のレスポンスが正しくない');
+  }
+  /**
+   * 質問削除のテスト / 他のユーザーが質問を削除しようとした時の確認
+   *
+   * @return void
+   */
+  public function testDeleteOtherUser()
+  {
+    $this->enableCsrfToken();
+    $this->enableRetainFlashMessages();
+    $this->login();
+
+    $targetQuestionId = 2; // 他のユーザーの質問(fixtureにて設定)
+    $this->post("/questions/delete/{$targetQuestionId}");
+
+    $this->assertRedirect(
+        ['controller' => 'Questions', 'action' => 'index'],
+        '他のユーザーが質問を削除しようとした時にリダイレクトが正しくかかっていない'
+    );
+    $this->assertSession(
+      '他のユーザーの質問を削除することはできません',
+      'Flash.flash.0.message',
+      '他のユーザーが質問を削除しようとした時のメッセージが正しくセットされていない'
+    );
   }
 
   /**
