@@ -13,12 +13,10 @@
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\Controller;
-
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
-
 /**
  * Static content controller
  *
@@ -28,7 +26,6 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
-
     /**
      * Displays a view
      *
@@ -48,7 +45,6 @@ class PagesController extends AppController
             throw new ForbiddenException();
         }
         $page = $subpage = null;
-
         if (!empty($path[0])) {
             $page = $path[0];
         }
@@ -56,7 +52,6 @@ class PagesController extends AppController
             $subpage = $path[1];
         }
         $this->set(compact('page', 'subpage'));
-
         try {
             $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {

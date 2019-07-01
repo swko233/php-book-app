@@ -17,6 +17,7 @@ services:
       - DATABASE_USER=root
       - DATABASE_PASS=secret
       - DATABASE_NAME=qa_app
+      - DATABASE_TEST_URL=mysql://root:secret@php-book-app-db/test
     # docker-init-setup.shを実行し、その後apache2-foregroundを実行する
     # ここでは、公式イメージphp:7.2-apacheの CMD ["apache2-foreground"]を上書き？している
     command: bash -c "sh docker-init-setup.sh && apache2-foreground"
